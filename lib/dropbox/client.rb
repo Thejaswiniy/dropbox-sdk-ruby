@@ -363,6 +363,7 @@ module Dropbox
       def upload_request(action, body, args={})
         resp = HTTP.auth('Bearer ' + @access_token).headers({
           'Content-Type' => 'application/octet-stream',
+          'Retry-After' => 120,
           'Dropbox-API-Arg' => args.to_json,
           'Transfer-Encoding' => ('chunked' unless body.is_a?(String))
         }).post(CONTENT_API + action, body: body)
